@@ -1,138 +1,71 @@
-import Swal from "sweetalert2";
-import { nanoid } from "nanoid";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  StyledForm,
-  InputContainer,
-  Input,
-  Label,
-  Button,
-} from "./ContactForm.styled";
-import { FiUser, FiPhone, FiUserPlus } from "react-icons/fi";
-import { contactsOperations, contactsSelectors } from "redux/contacts";
+import { Wrapper, Form, Label, Input, Button } from "./ContactForm.styled";
+import * as actions from "../../redux/actions";
+import { getContacts } from "../../redux/selectors";
 
-const ContactForm = () => {
+function ContactForm() {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
-
+  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
-  const contacts = useSelector(contactsSelectors.getContacts);
 
-  const nameInputId = nanoid();
-  const telInputId = nanoid();
-
-  const checkContact = (contacts, name, number) => {
-    const includedName = contacts.find(
-      (contact) => contact.name.toLowerCase() === name.toLowerCase()
-    );
-
-    const includedNumber = contacts.find(
-      (contact) =>
-        contact.number.replace(/[^0-9]/g, "") === number.replace(/[^0-9]/g, "")
-    );
-
-    if (includedName) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: `${name.toUpperCase()}\nis already in contacts!`,
-        confirmButtonColor: "indianred",
-      });
-
-      return includedName;
-    }
-
-    if (includedNumber) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: `This number is already in contacts as\n${includedNumber.name.toUpperCase()}`,
-        confirmButtonColor: "indianred",
-      });
-      return includedNumber;
-    }
+  const handleInputChange = ({ currentTarget }) => {
+    const { name, value } = currentTarget;
+    name === "name" ? setName(value) : setNumber(value);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.currentTarget;
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
 
-    switch (name) {
-      case "name":
-        setName(value);
-        break;
+    const contact = {
+      name: evt.currentTarget.name.value,
+      number: evt.currentTarget.number.value,
+    };
 
-      case "number":
-        setNumber(value);
-        break;
+    contacts.find(({ name }) => name === contact.name)
+      ? alert(`${contact.name} is already in contacts`)
+      : dispatch(actions.addContact(contact));
 
-      default:
-        return;
-    }
+    reset();
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const existedContact = checkContact(contacts, name, number);
-
-    if (existedContact) return;
-
-    dispatch(contactsOperations.addContact({ /*id: nanoid(),*/ name, number }));
-
+  const reset = () => {
     setName("");
     setNumber("");
   };
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
-      <InputContainer>
-        <Input
-          id={nameInputId}
-          type="text"
-          name="name"
-          value={name}
-          onChange={handleChange}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
-          autoComplete="off"
-          placeholder="Dmitry Karas"
-          maxLength="40"
-          required
-        />
-
-        <Label htmlFor={nameInputId}>
-          <FiUser size="22" />
+    <Wrapper>
+      <Form onSubmit={handleSubmit}>
+        <Label>
           Name
+          <Input
+            type="text"
+            name="name"
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+            value={name}
+            onChange={handleInputChange}
+          />
+          <Label>
+            Number
+            <Input
+              type="tel"
+              name="number"
+              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+              required
+              value={number}
+              onChange={handleInputChange}
+            />
+          </Label>
         </Label>
-      </InputContainer>
-
-      <InputContainer>
-        <Input
-          id={telInputId}
-          type="tel"
-          name="number"
-          value={number}
-          onChange={handleChange}
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Номер телефона должен состоять из цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
-          autoComplete="off"
-          placeholder="444-55-66"
-          maxLength="17"
-          required
-        />
-        <Label htmlFor={telInputId}>
-          <FiPhone size="22" />
-          Number
-        </Label>
-      </InputContainer>
-
-      <Button type="submit">
-        <FiUserPlus size="30" />
-        add
-      </Button>
-    </StyledForm>
+        <Button type="submit">Add contact</Button>
+      </Form>
+    </Wrapper>
   );
-};
+}
 
 export default ContactForm;

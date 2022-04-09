@@ -1,45 +1,44 @@
-import styled from "@emotion/styled/macro";
+import styled from "styled-components";
 
-export const List = styled.ul`
-  border-radius: 4px;
-  overflow: hidden;
-`;
-export const Item = styled.li`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin: 0 auto;
-  padding: 10px 5px;
-  border-bottom: 1px solid rosybrown;
-  text-transform: capitalize;
-  & span {
-    display: inline-flex;
-    align-items: center;
-    font-weight: 600;
-    color: var(--color-dark);
-    &:first-of-type {
-      color: var(--color-accent);
-      margin-right: 10px;
-    }
-    & svg {
-      margin-right: 10px;
-      color: var(--color-accent);
-    }
-  }
-  & svg {
-    color: var(--color-title);
-  }
-`;
-export const Button = styled.button`
+const Wrapper = styled.div`
+  margin: 0 auto 5px auto;
+  padding: 15px;
   display: block;
-  margin-left: auto;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
+  width: 325px;
+  text-align: center;
+`;
+
+const Text = styled.p`
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+`;
+
+const List = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`;
+
+const Item = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+`;
+
+const Button = styled.button`
   background-color: transparent;
-  transition: all 250ms ease-in-out;
+  border: 1px solid #0a65ee;
+  width: 70px;
+  min-width: 70px;
+  font-size: 13px;
+  padding: 5px;
+  color: #000;
+  border-radius: 5px;
   &:hover {
-    color: var(--color-accent);
-    transform: scale(1.3);
+    background-color: #f34141;
   }
 `;
+
+export { Wrapper, Text, List, Item, Button };

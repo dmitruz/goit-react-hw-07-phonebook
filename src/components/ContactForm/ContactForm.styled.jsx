@@ -1,91 +1,60 @@
-import styled from "@emotion/styled/macro";
+import styled from "styled-components";
 
-export const StyledForm = styled.form`
-  width: 450px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 40px;
-`;
-
-export const InputContainer = styled.div`
-  position: relative;
-  width: 100%;
-  margin-bottom: 40px;
-`;
-
-export const Input = styled.input`
+const Wrapper = styled.div`
+  margin: 0 auto 5px auto;
+  padding: 15px;
   display: block;
-  width: 100%;
-  height: 40px;
-  padding-left: 30px;
-  border: none;
-  border-bottom: 1px solid tan;
-  font-size: 20px;
-  color: var(--color-accent);
-  background-color: transparent;
-  &::placeholder {
-    opacity: 0;
-    color: var(--color-accent);
-    transition: opacity 250ms ease;
-  }
-  &:focus {
-    outline: none;
-    border-color: var(--color-accent);
-    &::placeholder {
-      opacity: 0.7;
-      transition-delay: 250ms;
-    }
-  }
-  &:focus + label,
-  &:not(:placeholder-shown) + label {
-    transform: translate(-32px, -30px);
-    font-size: 14px;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: var(--color-accent);
-    & svg {
-      color: var(--color-accent);
-      transform: translate(32px, 30px);
-    }
-  }
+  width: 325px;
+  text-align: center;
 `;
 
-export const Label = styled.label`
-  position: absolute;
-  left: 0;
-  bottom: 5px;
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-  cursor: text;
-  font-size: 20px;
-  color: var(--color-light);
-  transition: color 250ms ease-in-out, transform 250ms ease-in-out;
-  & svg {
-    margin-right: 10px;
-    transition: color 250ms ease-in-out, transform 250ms ease-in-out;
-  }
+const Form = styled.form`
+  width: 300px;
 `;
 
-export const Button = styled.button`
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 5px 10px;
+const Label = styled.label`
+  display: block;
+  margin-bottom: 15px;
+`;
+
+const Input = styled.input`
+  display: block;
+  width: 300px;
+  border: 2px solid #0a65ee;
+  border-radius: 3px;
+  padding: 6px 10px;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  line-height: 1;
+  margin-top: 5px;
+`;
+
+const Button = styled.button`
+  -webkit-appearance: none;
+  display: block;
+  width: 115px;
+  border: 0;
+  border-radius: 5px;
+  background: #0a65ee;
+  color: #fff;
+  font-weight: 400;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-transform: none;
+  padding: 8px 10px;
+  text-align: center;
   cursor: pointer;
-  border: 2px solid tan;
-  border-radius: 4px;
-  font-size: 20px;
-  text-transform: uppercase;
-  color: var(--color-light);
-  background-color: transparent;
-  transition: all 250ms ease-in-out;
+  text-decoration: none;
+  line-height: 1;
+  transition: all 0.2s linear;
+  min-width: 100px;
+  white-space: nowrap;
+  margin-bottom: 5px;
   &:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-  }
-  & svg {
-    margin-right: 10px;
+    background-color: #148f1e;
   }
 `;
+
+export { Wrapper, Form, Label, Input, Button };

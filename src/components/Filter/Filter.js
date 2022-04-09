@@ -1,33 +1,25 @@
-import { useSelector, useDispatch } from "react-redux";
-import { nanoid } from "nanoid";
-import { AiOutlineFileSearch } from "react-icons/ai";
-import { InputContainer, Input, Label } from "./Filter.styled";
-import { changeFilter } from "redux/contacts/contactsSlice";
-import { contactsSelectors } from "redux/contacts";
+import { useDispatch, useSelector } from "react-redux";
+import { Wrapper, Text, Input } from "./Filter.styled";
+import * as actions from "../../redux/actions";
+import { getFilter } from "../../redux/selectors";
 
-const Filter = () => {
-  const filterInputId = nanoid();
-
-  const value = useSelector(contactsSelectors.getFilter);
+function Filter() {
   const dispatch = useDispatch();
+  const value = useSelector(getFilter);
+  const setFilter = ({ currentTarget: { value } }) =>
+    dispatch(actions.inputСhanges(value));
 
   return (
-    <>
-      <InputContainer>
-        <Input
-          id={filterInputId}
-          type="text"
-          value={value}
-          onChange={(e) => dispatch(changeFilter(e.target.value))}
-          placeholder="Dmitry"
-        />
-        <Label htmlFor={filterInputId}>
-          <AiOutlineFileSearch size="30" />
-          Find contact
-        </Label>
-      </InputContainer>
-    </>
+    <Wrapper>
+      <Text>Find contacts by name</Text>
+      <Input
+        type="text"
+        name="filter"
+        onChange={setFilter}
+        value={value}
+      ></Input>
+    </Wrapper>
   );
-};
+}
 
 export default Filter;
