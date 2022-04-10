@@ -10,6 +10,7 @@
     "axios": "^0.26.1",
     "motion-style": "^4.2.2",
     "nanoid": "^3.3.2",
+    "node-sass": "^7.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -23,6 +24,7 @@
     "redux-persist": "^6.0.0",
     "shortid": "^2.2.16",
     "sweetalert2": "^11.4.8",
+    "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

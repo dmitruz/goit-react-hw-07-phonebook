@@ -1,35 +1,29 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import {
-  persistStore,
-  persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
   PERSIST,
   PURGE,
   REGISTER,
-} from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import { rootReducers } from "./reducers";
+} from 'redux-persist';
+import { phonebookReducer } from './phonebook';
 
-// const LS_KEY = "contacts";
-const persistConfig = {
-  key: "contacts",
-  storage,
-  blacklist: ["filter"],
-};
+const middleware = [
+  ...getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
+];
 
 const store = configureStore({
-  reducer: persistReducer(persistConfig, rootReducers),
-
-  middleware: (getDefaultMiddleware) => [
-    ...getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
-  ],
+  reducer: {
+    phonebook: phonebookReducer,
+  },
+  middleware,
+  // devTools: process.env.NODE_ENV === 'development',
 });
-const persistor = persistStore(store);
 
-export { store, persistor };
+// eslint-disable-next-line
+export default store;
