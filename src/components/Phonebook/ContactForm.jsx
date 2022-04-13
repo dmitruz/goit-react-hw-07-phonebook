@@ -2,9 +2,9 @@ import { useState, useRef } from 'react';
 import toast from 'react-hot-toast';
 import shortid from 'shortid';
 
-import { LoaderSpinnerDots } from '../components/Spinner/Spinner';
+import { LoaderSpinnerDots } from "../Spinner/Spinner";
 
-import css from "../components/Phonebook/Phonebook-css/ContactForm.module.css";
+import css from "../Phonebook/Phonebook-css/ContactForm.module.css";
 
 export default function ContactForm({ contacts }) {
   const [createContact, { isLoading }] = useCreateContactMutation();

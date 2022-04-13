@@ -1,4 +1,4 @@
-import Loader from 'react-loader-spinner';
+import * as  Loader  from 'react-loader-spinner';
 
 export const LoaderSpinner = () => {
   return <Loader type="Oval" color="#0ab38e" height={20} width={20} />;
