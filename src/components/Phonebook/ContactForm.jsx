@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react';
 import toast from 'react-hot-toast';
 import shortid from 'shortid';
-import { useCreateContactMutation } from '../../redux/Phonebook/ContactSlice';
-import { LoaderSpinnerDots } from "../Spinner/Spinner";
 
+import { LoaderSpinnerDots } from "../Spinner/Spinner";
+import { useCreateContactMutation } from '../../redux/Phonebook/ContactSlice';
 import css from "../Phonebook/Phonebook-css/ContactForm.module.css";
 
 export default function ContactForm({ contacts }) {
@@ -41,13 +41,13 @@ export default function ContactForm({ contacts }) {
       },
     };
 
-    if (contacts.find(con => con.name.toLowerCase() === name.toLowerCase())) {
+    if (contacts.find(contacts => contacts.name.toLowerCase() === name.toLowerCase())) {
       toast(`Name '${name}' is alresdy in contacts`, toastStyle);
 
       return;
     }
 
-    if (contacts.find(con => con.phone === phone)) {
+    if (contacts.find(contacts => contacts.phone === phone)) {
       toast(`Number '${phone}' is alresdy in contacts`, toastStyle);
       return;
     }
